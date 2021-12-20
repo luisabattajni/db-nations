@@ -38,8 +38,7 @@ public class Main {
 						String regionName = rs.getString(3);
 						String continentName = rs.getString(4);
 
-						System.out
-								.println(countryId + " - " + countryName + " - " + regionName + " - " + continentName);
+						System.out.println(countryId + " - " + countryName + " - " + regionName + " - " + continentName);
 
 					}
 				}
