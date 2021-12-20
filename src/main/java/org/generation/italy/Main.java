@@ -50,6 +50,25 @@ public class Main {
 			int inputId = Integer.parseInt(scan.nextLine());
 			System.out.println("Ulteriori dettagli:");
 //			System.out.println("\n");
+			
+			String sqlN = "SELECT c.name \n"
+					+ "FROM countries c\n"
+					+ "WHERE c.country_id = ?;";
+
+			try (PreparedStatement psN = con.prepareStatement(sqlN)) {
+				psN.setInt(1, inputId);
+
+				try (ResultSet rsN = psN.executeQuery()) {
+					while (rsN.next()) {
+
+						String nameN = rsN.getString(1);
+
+						System.out.print(nameN + "\n");
+
+					}
+				}
+			}
+			
 			System.out.print("Lingue parlate: ");
 
 			String sql = "SELECT `language`\n" + "FROM languages l \n"
