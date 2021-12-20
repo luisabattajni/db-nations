@@ -21,6 +21,7 @@ public class Main {
 		
 		try(Connection con = DriverManager.getConnection(URL, USER, PASSWORD)){
 			
+//			boolean found = true;
 			System.out.print("Inserisci una stringa da ricercare: ");
 			String findThis = scan.nextLine();
 			
@@ -43,12 +44,39 @@ public class Main {
 						String regionName = rs.getString(3);
 						String continentName = rs.getString(4);
 						
-						
 						System.out.println(countryId + " - " + countryName + " - " + regionName + " - " + continentName);
+						
 					}
 				}
 				
 			}
+			
+			System.out.println("Inserisci uno degli ID trovati:");
+			int inputId = Integer.parseInt(scan.nextLine());
+			System.out.println("Ulteriori dettagli:");
+			System.out.println("Lingue parlate:");
+			
+			String sql = "SELECT `language`\n"
+						+ "FROM languages l \n"
+						+ "INNER JOIN country_languages cl ON cl.language_id = l.language_id \n"
+						+ "INNER JOIN countries c ON cl.country_id = c.country_id\n"
+						+ "WHERE c.country_id = ? "
+						+ "ORDER BY `language`;";
+			
+			try (PreparedStatement psLingue = con.prepareStatement(sql)) {
+				psLingue.setInt(1, inputId);
+				
+				try (ResultSet rsLingue = psLingue.executeQuery()) {
+					while (rsLingue.next()) {
+						
+						String lingue = rsLingue.getString(1);
+
+						System.out.print(lingue + "; ");
+						
+					}
+				}
+			}
+
 
 	} catch(SQLException e) {
 
